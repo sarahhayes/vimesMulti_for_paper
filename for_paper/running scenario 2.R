@@ -36,10 +36,10 @@ cuts_spatial
 
 
 ## Need the case data
-case_times <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/Vimes/vimes_multi_sim/tests_sh/temp_trash/case_time_diffs.csv")
-case_dists <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/Vimes/vimes_multi_sim/tests_sh/temp_trash/case_dists.csv")
-spp_vect <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/Vimes/vimes_multi_sim/tests_sh/temp_trash/case_sp_vect.csv")
-spp_vect <- as.factor(spp_vect$x)
+case_times <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/vimesMulti_for_paper/data/case_time_diffs.csv")
+case_dists <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/vimesMulti_for_paper/data/case_dists.csv")
+spp_vect <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/vimesMulti_for_paper/data/case_sp_vect.csv")
+pp_vect <- as.factor(spp_vect$x)
 
 dat_time <- case_times$x
 dat_geo1 <- case_dists$UTM.Easting

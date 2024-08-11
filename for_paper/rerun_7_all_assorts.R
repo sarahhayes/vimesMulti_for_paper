@@ -53,11 +53,9 @@ for (i in 1:length(assort_vect)) {
 # cuts_list_spatial
 
 ## Need the case data
-case_times <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/Vimes/vimes_multi_sim/tests_sh/temp_trash/case_time_diffs.csv")
-case_dists <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/Vimes/vimes_multi_sim/tests_sh/temp_trash/case_dists.csv")
-#case_dists <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/Vimes/vimes_multi_sim/tests_sh/temp_trash/distance_latlong.csv")
-
-spp_vect <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/Vimes/vimes_multi_sim/tests_sh/temp_trash/case_sp_vect.csv")
+case_times <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/vimesMulti_for_paper/data/case_time_diffs.csv")
+case_dists <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/vimesMulti_for_paper/data/case_dists.csv")
+spp_vect <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/vimesMulti_for_paper/data/case_sp_vect.csv")
 spp_vect <- as.factor(spp_vect$x)
 
 dat_time <- case_times$x

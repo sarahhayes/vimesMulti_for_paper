@@ -56,13 +56,14 @@ for (i in 1:length(assort_vect)) {
 ## For this we need to generate multiple data sets using the uncertainty associated with times and locations
 
 ## Need the case data
-case_times <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/Vimes/vimes_multi_sim/tests_sh/temp_trash/case_time_diffs.csv")
-case_dists <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/Vimes/vimes_multi_sim/tests_sh/temp_trash/case_dists.csv")
-uncert_times <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/Vimes/vimes_multi_sim/tests_sh/temp_trash/dates_uncertainty.csv")
-uncert_dists <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/Vimes/vimes_multi_sim/tests_sh/temp_trash/distance_uncertainty.csv")
+case_times <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/vimesMulti_for_paper/data/case_time_diffs.csv")
+case_dists <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/vimesMulti_for_paper/data/case_dists.csv")
+uncert_times <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/vimesMulti_for_paper/data/dates_uncertainty.csv")
+uncert_dists <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/vimesMulti_for_paper/data/distance_uncertainty.csv")
 
-spp_vect <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/Vimes/vimes_multi_sim/tests_sh/temp_trash/case_sp_vect.csv")
+spp_vect <- read.csv("C:/Users/hayes/OneDrive - Nexus365/Documents/GitHub/vimesMulti_for_paper/data/case_sp_vect.csv")
 spp_vect <- as.factor(spp_vect$x)
+
 
 
 ## we need to introduce the variation into the dates and locations.
