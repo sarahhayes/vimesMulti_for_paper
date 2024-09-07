@@ -282,7 +282,7 @@ col_by_status_map
 
 # This is a map of all the cases. Be good to just map those in a cluster and colour them by cluster.
 
-min_size = 3
+min_size = 2
 
 cluster_locs <- sites %>% group_by(cluster_no) %>% count() %>% filter(n>=min_size)
 cluster_locs$cluster_no <- as.factor(as.character(cluster_locs$cluster_no))
@@ -363,29 +363,50 @@ all_slim$cluster_no <- as.character(all_slim$cluster_no)
 all_slim <- all_slim %>%
   mutate(is_bottom_row = ifelse(cluster_no=="0", TRUE, FALSE))
 
+all_slim$cluster_no <- as.numeric(as.character(all_slim$cluster_no))
+
 filtered_data <- all_slim %>% filter(cluster_no !=  "0")
 
+fd <- filtered_data %>%
+  group_by(cluster_no) %>%
+  summarise(lowest_value = min(dat_time)) %>%
+  ungroup() %>%
+  arrange(lowest_value) %>%
+  mutate(rank = row_number()) %>%
+  dplyr::select(cluster_no, rank)
 
-col_clust_by_time_with_singles <- ggplot(data = all_slim, mapping = aes(x = dat_time, y = cluster_no, colour = group_vect)) +
+all_slim <- left_join(all_slim, fd, by = "cluster_no")
+all_slim$rank[is.na(all_slim$rank)] <- 100
+
+filtered_data <- left_join(filtered_data, fd)
+
+all_slim$rank <- as.factor(all_slim$rank)
+all_slim <- all_slim %>%
+  dplyr::mutate(rank = forcats::fct_rev(rank))
+
+filtered_data$rank <- as.factor(filtered_data$rank)
+filtered_data <- filtered_data %>%
+  dplyr::mutate(rank = forcats::fct_rev(rank))
+
+# Plot
+col_clust_by_time_with_singles <- ggplot(data = all_slim, mapping = aes(x = dat_time, y = rank, colour = group_vect)) +
+  geom_point(aes(colour = ifelse(is_bottom_row, paste0(group_vect, "_light"), group_vect)),
+             size = 1.5, shape = 16) +
   geom_line(data = filtered_data, linewidth = 0.5, colour = "black") +
-  geom_point(aes(colour = ifelse(is_bottom_row, paste0(group_vect, "_light"), group_vect)), size = 2.0, shape = 16) +
   labs(y = "Identified clusters", colour = "Species") +
   theme(axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
         panel.background = element_rect(fill = "white", colour = "grey50"),
-        panel.grid.major = element_line(linewidth =  0.5, linetype = 'solid',
-                                        colour = "grey90"),
-        panel.grid.minor = element_line(linewidth = 0.5, linetype = 'dashed',
-                                        colour = "grey90"),
+        panel.grid.major = element_line(linewidth = 0.5, linetype = 'solid', colour = "grey90"),
+        panel.grid.minor = element_line(linewidth = 0.5, linetype = 'dashed', colour = "grey90"),
         legend.position = "bottom",
         legend.key.size = unit(0.4, 'cm'),
         legend.text = element_text(size=8),
         legend.title = element_text(size=10),
         plot.title = element_text(size = 15, face = "bold")) +
   scale_x_continuous(name = "Date", breaks = year_breaks, labels = year_labs) +
-  scale_colour_manual(values = c("red" ,"blue",
-                                 "#FF00004C", "#0000FF40"),
-                      labels = c("Domestic - cluster", "Wildlife - cluster", "Domestic - single", "Wildlife - single" )) +
+  scale_colour_manual(values = c("red" ,"blue", "#FF00004C", "#0000FF40"),
+                      labels = c("Domestic - cluster", "Wildlife - cluster", "Domestic - single", "Wildlife - single")) +
   ggtitle("C")
 col_clust_by_time_with_singles
 
@@ -399,7 +420,7 @@ figure.list <- list(col_by_status_map, col_by_clust_map, col_clust_by_time_with_
 top <- plot_grid(figure.list[[1]], figure.list[[2]], ncol = 2)
 bottom <- plot_grid(figure.list[[3]], ncol = 1)
 multi_map_fig_three <-  plot_grid(top, bottom,
-          ncol=1, rel_heights=c(1,1))
+          ncol=1, rel_heights=c(0.7,1))
 multi_map_fig_three
 
 # can use 'export > save as image" and set aspect to 900 x 750 to save
